@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "module": "ES6",
+    "sourceMap": true,
+    "target": "ES6",
+    "lib": ["ES2020"],
+    "skipLibCheck": true,
+    "declaration": true,
+    "outDir": "release"
+  }
+}
