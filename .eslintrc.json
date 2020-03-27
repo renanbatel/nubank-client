@@ -34,7 +34,7 @@
     "plugin:promise/recommended",
     "plugin:jest/recommended"
   ],
-  "ignorePatterns": ["node_modules/"],
+  "ignorePatterns": ["node_modules/", "release/"],
   "rules": {
     "arrow-parens": ["error", "always"],
     "comma-dangle": ["error", "always-multiline"],
