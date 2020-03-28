@@ -1,0 +1,17 @@
+{
+  "transform": {
+    "^.+\\.tsx?$": "ts-jest"
+  },
+  "testPathIgnorePatterns": [
+    "<rootDir>/dist/",
+    "<rootDir>/node_modules/",
+    "<rootDir>/coverage/"
+  ],
+  "moduleFileExtensions": ["js", "ts"],
+  "testRegex": "(/__tests__/.*(\\.|/)(test))\\.ts$",
+  "collectCoverage": true,
+  "coverageReporters": ["html", "lcov"],
+  "testTimeout": 15000,
+  "clearMocks": true,
+  "resetMocks": true
+}
