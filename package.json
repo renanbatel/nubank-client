@@ -22,8 +22,8 @@
     "test": "jest"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "qrcode": "^1.4.4",
-    "superagent": "^5.2.2",
     "uuid": "^7.0.2"
   },
   "devDependencies": {
