@@ -3,7 +3,7 @@
   "bracketSpacing": true,
   "endOfLine": "auto",
   "jsxBracketSameLine": false,
-  "printWidth": 100,
+  "printWidth": 150,
   "proseWrap": "never",
   "quoteProps": "as-needed",
   "semi": true,

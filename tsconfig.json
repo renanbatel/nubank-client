@@ -1,11 +1,17 @@
 {
   "compilerOptions": {
-    "module": "UMD",
-    "sourceMap": true,
+    "module": "CommonJS",
+    "moduleResolution": "Node",
     "target": "ES6",
     "lib": ["ES2020"],
+    "sourceMap": true,
     "skipLibCheck": true,
     "declaration": true,
-    "outDir": "release"
-  }
+    "esModuleInterop": true,
+    "outDir": "dist"
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }
