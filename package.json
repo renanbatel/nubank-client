@@ -18,11 +18,13 @@
     "watch": "rimraf dist && tsc -w",
     "lint": "eslint . --ext .ts",
     "format": "yarn lint --fix",
+    "types:check": "tsc --noEmit",
     "prepublish": "yarn build",
     "test": "jest"
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "axios-retry": "^3.1.2",
     "qrcode": "^1.4.4",
     "uuid": "^7.0.2"
   },

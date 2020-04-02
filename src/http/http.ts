@@ -1,32 +1,48 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import axiosRetry from 'axios-retry';
+
+import { generateCorrelationId } from '../util';
 
 export class Http {
   private axiosInstance: AxiosInstance;
-  private authToken: string;
+  private accessToken: string;
 
   constructor() {
-    this.axiosInstance = axios.create({
+    const axiosInstance = axios.create({
       headers: {
         'Content-Type': 'application/json',
-        'X-Correlation-Id': 'WEB-APP.pewW9',
         'User-Agent': 'nubank-client - https://github.com/renanbatel/nubank-client',
         Origin: 'https://conta.nubank.com.br',
         Referer: 'https://conta.nubank.com.br',
       },
     });
-    this.authToken = null;
 
-    this.axiosInstance.interceptors.request.use((config) => {
-      if (!config.headers['Authorization'] && this.authToken) {
-        config.headers['Authorization'] = `Bearer ${this.authToken}`;
-      }
+    axiosInstance.interceptors.request.use(this.correlationIdInterceptor.bind(this));
+    axiosInstance.interceptors.request.use(this.authTokenInterceptor.bind(this));
+    axiosRetry(axiosInstance, { retries: 0 });
 
-      return config;
-    });
+    this.axiosInstance = axiosInstance;
+    this.accessToken = null;
   }
 
-  public setAuthToken(authToken: string): void {
-    this.authToken = authToken;
+  private correlationIdInterceptor(config: AxiosRequestConfig): AxiosRequestConfig {
+    const id = generateCorrelationId();
+
+    config.headers['X-Correlation-Id'] = `WEB-APP.${id}`;
+
+    return config;
+  }
+
+  private authTokenInterceptor(config: AxiosRequestConfig): AxiosRequestConfig {
+    if (!config.headers['Authorization'] && this.accessToken) {
+      config.headers['Authorization'] = `Bearer ${this.accessToken}`;
+    }
+
+    return config;
+  }
+
+  public setAccessToken(accessToken: string): void {
+    this.accessToken = accessToken;
   }
 
   get request(): AxiosInstance {
