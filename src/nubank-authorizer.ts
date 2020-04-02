@@ -2,9 +2,7 @@ import { AxiosRequestConfig } from 'axios';
 import { QRCodeToDataURLOptions, toDataURL } from 'qrcode';
 import { v4 as uuidV4 } from 'uuid';
 
-import { http } from './http';
-import { DiscoveryUrls, LoginParameters } from './http/enums';
-import { ApiUrls, AppUrls, LiftResponse, LoginResponse } from './http/types';
+import { ApiUrls, AppUrls, DiscoveryUrls, http, LiftResponse, LoginParameters, LoginResponse } from './http';
 
 export class NubankAuthorizer {
   public async getLiftId(options?: QRCodeToDataURLOptions): Promise<{ uuid: string; qrCode: string }> {
