@@ -1,6 +1,6 @@
 import { BillStates } from '../../../enum';
 
-export type Bill = {
+export type BillSummary = {
   id?: string;
   state: BillStates;
   summary: {
@@ -24,5 +24,6 @@ export type Bill = {
     self: { href: string };
     barcode: { href: string };
     boleto_mail: { href: string };
+    invoice_email: { href: string };
   };
 };
