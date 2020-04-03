@@ -10,7 +10,7 @@ function setUp(): SetUpEntities {
   return { nubankAuthorizer };
 }
 
-describe('nubankAuthorizer', () => {
+describe('NubankAuthorizer', () => {
   describe('getLiftId', () => {
     it('should return the uuid and the qrCode', async () => {
       const { nubankAuthorizer } = setUp();
