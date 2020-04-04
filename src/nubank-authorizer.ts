@@ -32,7 +32,7 @@ export class NubankAuthorizer {
     const config = {
       'axios-retry': {
         retries: actualRetries,
-        retryDelay: (retryCount) => retryCount * 1000,
+        retryDelay: (retryCount) => retryCount * 500,
         retryCondition: (error) => error.response.status === 404,
       },
     };
