@@ -13,7 +13,7 @@
     "email": "renanbatel@gmail.com"
   },
   "scripts": {
-    "clean": "rimraf dist node_modules",
+    "clean": "rimraf dist node_modules coverage",
     "build": "rimraf dist && tsc",
     "watch": "rimraf dist && tsc -w",
     "lint": "eslint . --ext .ts",
