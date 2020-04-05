@@ -4,5 +4,6 @@ src
 .commitlintrc.json
 .eslintrc.json
 .huskyrc.json
+.prettierrc.json
 jest.config.json
 tsconfig.json
