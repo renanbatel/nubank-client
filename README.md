@@ -21,49 +21,45 @@ $ yarn add nubank-client # npm i nubank-client --save
 You can use the library on Node or Browser, there are no dependencies that force you to use it on a specific environment, you'll only have to split the authentication on different requests if you plan to build an API with Node. Here's an example of using the library inside a React component:
 
 ```javascript
-import { Nubank, NubankAuthorizer } from 'nubank-client';
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Nubank } from 'nubank-client';
 
-class Example extends Component {
-  state = { qrCode: '' };
+function App() {
+  const [qrCode, setQRCode] = useState('');
 
-  async componentDidMount() {
-    // Create a new instance of NubankAuthorizer
-    const nubankAuthorizer = new NubankAuthorizer();
-    // Generates the uuid and the qrcode base64 image for qrcode authentication
-    const liftId = await nubankAuthorizer.getLiftId();
+  useEffect(() => {
+    (async () => {
+      // Create a Nubank instance. The login is your cpf with only numbers in it.
+      const nubank = new Nubank({ login: 'login', password: 'password' });
+      // Generates the qrcode base64 image for user authentication.
+      const qrCode = await nubank.generateQRCode();
 
-    // You need to show the qrcode image for the user for qrcode authentication. Here I'm updating
-    // the component state with the qrcode base64 image, so I can use it to update the `src` value
-    // of an img component
-    this.setState({ qrCode: liftId.qrCode });
+      // You need to show the qrcode image for the user for authentication. Here I'm updating
+      // the component state with the qrcode base64 image, so I can use it to update the `src` value
+      // of an img component
+      setQRCode(qrCode);
 
-    // Do the login request. The login is your cpf with only numbers in it.
-    const loginResponse = await nubankAuthorizer.login('login', 'password');
-    // Do the qrcode authentication request. You'll need the generated uuid and the access_token
-    // received from login response. The qrcode must have been already read by the user, otherwise
-    // this request will return a 404 error. You can pass a `retries` number, so if the request
-    // fails it will retry the number of `retries` provided. Maximum is 15.
-    const liftResponse = await nubankAuthorizer.lift(liftId.uuid, loginResponse.access_token, 15);
-    // Creates a new Instance of Nubank providing the qrcode authentication response
-    const nubank = new Nubank(liftResponse);
-    // Get the bills resource
-    const bills = await nubank.getBills();
-    // Get the open bill details
-    const open = await bills.getOpen();
-    // Get future bills, this wil get all your future bills details
-    const future = await bills.getFuture();
-    // Get a specific bill details by providing a close date
-    const bill = await bills.getByCloseDate('YYYY-MM-DD');
+      // To successfully authenticate, the QR code must have been already read by the user,
+      // otherwise, the request will return a 404 error. By default, it'll retry the authentication
+      // request 15 times, as long as it replies with a 404 status.
+      await nubank.authenticate();
 
-    console.log('open bill:', open);
-    console.log('future bill:', future);
-    console.log('bill from close date:', bill);
-  }
+      // Get the bills resource
+      const bills = await nubank.getBills();
+      // Get the open bill details
+      const open = await bills.getOpen();
+      // Get future bills, this wil get all your future bills details
+      const future = await bills.getFuture();
+      // Get a specific bill details by providing a close date
+      const bill = await bills.getByCloseDate('YYYY-MM-DD');
 
-  render() {
-    return <img src={this.state.qrCode} />
-  }
+      console.log('open bill:', open);
+      console.log('future bill:', future);
+      console.log('bill from close date:', bill);
+    })();
+  }, []);
+
+  return <img src={qrCode} width="250" alt="qr-code" />;
 }
 ```
 
@@ -98,10 +94,6 @@ $ yarn format # npm run format
 ```
 
 I recommend you to use Visual Studio Code and to install the recommended extensions for a better development workflow ;)
-
-## References
-
-A special thanks to [Danilo Barion Nogueira](https://github.com/danilobarion1986) and his [nubank_rb](https://github.com/danilobarion1986/nubank_rb) project, it was used a lot for better understanding Nubank API's authentication workflow.
 
 ## License
 
