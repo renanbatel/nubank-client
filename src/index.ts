@@ -1,2 +1,2 @@
-export * from './nubank-authorizer';
+export * from './nubank-authenticator';
 export * from './nubank';
