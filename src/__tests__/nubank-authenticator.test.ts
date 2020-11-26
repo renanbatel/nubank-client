@@ -1,20 +1,20 @@
-import { NubankAuthorizer } from '../nubank-authorizer';
+import { NubankAuthenticator } from '../nubank-authenticator';
 
 type SetUpEntities = {
-  nubankAuthorizer: NubankAuthorizer;
+  nubankAuthenticator: NubankAuthenticator;
 };
 
 function setUp(): SetUpEntities {
-  const nubankAuthorizer = new NubankAuthorizer();
+  const nubankAuthenticator = new NubankAuthenticator();
 
-  return { nubankAuthorizer };
+  return { nubankAuthenticator };
 }
 
-describe('NubankAuthorizer', () => {
+describe('NubankAuthenticator', () => {
   describe('getLiftId', () => {
     it('should return the uuid and the qrCode', async () => {
-      const { nubankAuthorizer } = setUp();
-      const result = await nubankAuthorizer.getLiftId();
+      const { nubankAuthenticator } = setUp();
+      const result = await nubankAuthenticator.generateLiftToken();
 
       expect(result.uuid).toBeDefined();
       expect(typeof result.uuid).toBe('string');
