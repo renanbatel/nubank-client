@@ -1,9 +1,12 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import axiosRetry from 'axios-retry';
+import { injectable } from 'inversify';
 
-import { generateCorrelationId } from '../util';
+import { generateCorrelationId } from '../utils';
+import { Http } from './interfaces';
 
-export class Http {
+@injectable()
+export class DefaultHttp implements Http {
   private axiosInstance: AxiosInstance;
   private accessToken: string;
 
@@ -25,6 +28,10 @@ export class Http {
     this.accessToken = null;
   }
 
+  get request(): AxiosInstance {
+    return this.axiosInstance;
+  }
+
   private correlationIdInterceptor(config: AxiosRequestConfig): AxiosRequestConfig {
     const id = generateCorrelationId();
 
@@ -41,13 +48,7 @@ export class Http {
     return config;
   }
 
-  public setAccessToken(accessToken: string): void {
+  public setAccessToken(accessToken: string) {
     this.accessToken = accessToken;
   }
-
-  get request(): AxiosInstance {
-    return this.axiosInstance;
-  }
 }
-
-export const http = new Http();

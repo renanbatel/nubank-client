@@ -1,12 +1,23 @@
-import { BillResponse, BillsSummaryResponse, BillStates, BillSummary, FutureBillResponse, http, NotFoundError } from '../http';
+import { inject, injectable } from 'inversify';
+
+import { Services } from '../config';
+import { BillResponse, BillsSummaryResponse, BillStates, BillSummary, FutureBillResponse, Http, NotFoundError } from '../http';
 import { UnprocessableError } from './error';
+import { Bills } from './interfaces';
 import { RecursivePartial } from './types';
 
-export class Bills {
+@injectable()
+export class DefaultBills implements Bills {
+  @inject(Services.Http)
+  private http: Http;
   private billsSummaryResponse: BillsSummaryResponse;
 
-  constructor(billsSummaryResponse: BillsSummaryResponse) {
+  public setBillsSummaryResponse(billsSummaryResponse: BillsSummaryResponse) {
     this.billsSummaryResponse = billsSummaryResponse;
+  }
+
+  public getBillsSummaryResponse(): BillsSummaryResponse {
+    return this.billsSummaryResponse;
   }
 
   public findBillSummary(parameters: RecursivePartial<BillSummary>): BillSummary {
@@ -25,18 +36,14 @@ export class Bills {
     return bill;
   }
 
-  public getSummary(): BillsSummaryResponse {
-    return this.billsSummaryResponse;
-  }
-
   public async getOpen(): Promise<BillResponse> {
-    const { data } = await http.request.get<BillResponse>(this.billsSummaryResponse._links.open.href);
+    const { data } = await this.http.request.get<BillResponse>(this.billsSummaryResponse._links.open.href);
 
     return data;
   }
 
   public async getFuture(): Promise<FutureBillResponse> {
-    const { data } = await http.request.get(this.billsSummaryResponse._links.future.href);
+    const { data } = await this.http.request.get(this.billsSummaryResponse._links.future.href);
 
     return data;
   }
@@ -48,7 +55,7 @@ export class Bills {
       throw new UnprocessableError("You can't get details about an unique future bill, use `getFuture` instead");
     }
 
-    const { data } = await http.request.get(bill._links.self.href);
+    const { data } = await this.http.request.get(bill._links.self.href);
 
     return data;
   }
