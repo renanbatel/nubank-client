@@ -18,11 +18,15 @@ Install the package:
 $ yarn add nubank-client # npm i nubank-client --save
 ```
 
+> This project uses [InversifyJS](https://github.com/inversify/InversifyJS) for dependency injection, so in some JavaScript environments you'll need to use polyfills, you can see more about it [here](https://github.com/inversify/InversifyJS/blob/master/wiki/environment.md).
+
 You can use the library on Node or Browser, there are no dependencies that force you to use it on a specific environment, you'll only have to split the authentication on different requests if you plan to build an API with Node. Here's an example of using the library inside a React component:
 
 ```javascript
+import 'reflection-metadata';
+
 import React, { useEffect, useState } from 'react';
-import { Nubank } from 'nubank-client';
+import nubank from 'nubank-client';
 
 function App() {
   const [qrCode, setQRCode] = useState('');
@@ -30,9 +34,9 @@ function App() {
   useEffect(() => {
     (async () => {
       // Create a Nubank instance. The login is your cpf with only numbers in it.
-      const nubank = new Nubank({ login: 'login', password: 'password' });
+      const nubankInstance = nubank.createInstance({ login: 'login', password: 'password' });
       // Generates the qrcode base64 image for user authentication.
-      const qrCode = await nubank.generateQRCode();
+      const qrCode = await nubankInstance.generateQRCode();
 
       // You need to show the qrcode image for the user for authentication. Here I'm updating
       // the component state with the qrcode base64 image, so I can use it to update the `src` value
@@ -42,10 +46,10 @@ function App() {
       // To successfully authenticate, the QR code must have been already read by the user,
       // otherwise, the request will return a 404 error. By default, it'll retry the authentication
       // request 15 times, as long as it replies with a 404 status.
-      await nubank.authenticate();
+      await nubankInstance.authenticate();
 
       // Get the bills resource
-      const bills = await nubank.getBills();
+      const bills = await nubankInstance.getBills();
       // Get the open bill details
       const open = await bills.getOpen();
       // Get future bills, this wil get all your future bills details
