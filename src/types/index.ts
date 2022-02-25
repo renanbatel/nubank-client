@@ -1,1 +1,1 @@
-export * from './instance-options.type';
+export * from './instance-options.type'

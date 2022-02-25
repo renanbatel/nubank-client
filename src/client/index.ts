@@ -1,3 +1,3 @@
-export * from './interfaces';
-export * from './default-nubank';
-export * from './default-authenticator';
+export * from './default-authenticator'
+export * from './default-nubank'
+export * from './interfaces'

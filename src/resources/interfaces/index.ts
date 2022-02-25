@@ -1,1 +1,1 @@
-export * from './bills.interface';
+export * from './bills.interface'

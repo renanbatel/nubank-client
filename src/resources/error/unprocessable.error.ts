@@ -1,7 +1,7 @@
 export class UnprocessableError extends Error {
   constructor(message = 'UnprocessableError') {
-    super(message);
+    super(message)
 
-    this.name = 'UnprocessableError';
+    this.name = 'UnprocessableError'
   }
 }

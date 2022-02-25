@@ -1,2 +1,2 @@
-export * from './credentials.type';
-export * from './lift-token.type';
+export * from './credentials.type'
+export * from './lift-token.type'

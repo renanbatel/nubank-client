@@ -1,2 +1,2 @@
-export * from './nubank.interface';
-export * from './authenticator.interface';
+export * from './authenticator.interface'
+export * from './nubank.interface'

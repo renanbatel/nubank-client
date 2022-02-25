@@ -1,1 +1,1 @@
-export * from './recursive-partial.type';
+export * from './recursive-partial.type'

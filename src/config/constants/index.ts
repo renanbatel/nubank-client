@@ -1,1 +1,1 @@
-export * from './services.constant';
+export * from './services.constant'

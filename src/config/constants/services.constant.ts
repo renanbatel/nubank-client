@@ -3,4 +3,4 @@ export const Services = {
   Nubank: Symbol.for('Nubank'),
   Authenticator: Symbol.for('Authenticator'),
   Bills: Symbol.for('Bills'),
-};
+}
