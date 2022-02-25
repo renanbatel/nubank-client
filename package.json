@@ -13,6 +13,7 @@
     "email": "rbatel@pm.me"
   },
   "scripts": {
+    "prepare": "husky install .config/husky",
     "clean": "rimraf dist node_modules coverage",
     "build": "rimraf dist && tsc",
     "watch": "rimraf dist && tsc -w",
