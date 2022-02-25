@@ -10,7 +10,7 @@
   },
   "author": {
     "name": "Renan Batel",
-    "email": "renanbatel@gmail.com"
+    "email": "rbatel@pm.me"
   },
   "scripts": {
     "clean": "rimraf dist node_modules coverage",
