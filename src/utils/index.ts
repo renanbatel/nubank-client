@@ -1,1 +1,1 @@
-export * from './generate-correlation-id';
+export * from './generate-correlation-id'

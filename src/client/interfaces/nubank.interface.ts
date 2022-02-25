@@ -1,9 +1,9 @@
-import { Bills } from '../../resources';
-import { Credentials } from '../types';
+import { Bills } from '../../resources'
+import { Credentials } from '../types'
 
 export interface Nubank {
-  setCredentials(credentials: Credentials);
-  generateQRCode(): Promise<string>;
-  authenticate(retries?: number): Promise<void>;
-  getBills(): Promise<Bills>;
+  setCredentials(credentials: Credentials)
+  generateQRCode(): Promise<string>
+  authenticate(retries?: number): Promise<void>
+  getBills(): Promise<Bills>
 }

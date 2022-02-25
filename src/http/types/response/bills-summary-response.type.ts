@@ -1,9 +1,9 @@
-import { BillSummary } from './resources';
+import { BillSummary } from './resources'
 
 export type BillsSummaryResponse = {
-  bills: BillSummary[];
+  bills: BillSummary[]
   _links: {
-    open: { href: string };
-    future: { href: string };
-  };
-};
+    open: { href: string }
+    future: { href: string }
+  }
+}

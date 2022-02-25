@@ -1,9 +1,9 @@
-import { BillItem, BillSummary } from './resources';
+import { BillItem, BillSummary } from './resources'
 
 export type FutureBillResponse = {
-  bills: Array<BillSummary & { line_items: BillItem[] }>;
+  bills: Array<BillSummary & { line_items: BillItem[] }>
   _links: {
-    open: { href: string };
-    future: { href: string };
-  };
-};
+    open: { href: string }
+    future: { href: string }
+  }
+}
