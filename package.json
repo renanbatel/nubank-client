@@ -14,7 +14,6 @@
   },
   "scripts": {
     "prepare": "husky install .config/husky",
-    "prepublish": "npm run build",
     "clean": "rimraf dist node_modules coverage",
     "build": "rimraf dist && tsc",
     "watch": "rimraf dist && tsc -w",
