@@ -18,54 +18,11 @@ Install the package:
 $ yarn add nubank-client # npm i nubank-client --save
 ```
 
-> This project uses [InversifyJS](https://github.com/inversify/InversifyJS) for dependency injection, so in some JavaScript environments you'll need to use polyfills, you can see more about it [here](https://github.com/inversify/InversifyJS/blob/master/wiki/environment.md).
+> This project uses [tsyringe](https://github.com/microsoft/tsyringe) for dependency injection, so in some JavaScript environments you'll need to use polyfills for the Reflect API, you can see more about it [here](https://github.com/microsoft/tsyringe#installation).
 
-You can use the library on Node or Browser, there are no dependencies that force you to use it on a specific environment, you'll only have to split the authentication on different requests if you plan to build an API with Node. Here's an example of using the library inside a React component:
+You can use the library on Node or Browser, there are no dependencies that force you to use it on a specific environment, you'll only have to split the authentication on different requests if you plan to build an API with Node. Here are some available examples:
 
-```javascript
-import 'reflection-metadata';
-
-import React, { useEffect, useState } from 'react';
-import nubank from 'nubank-client';
-
-function App() {
-  const [qrCode, setQRCode] = useState('');
-
-  useEffect(() => {
-    (async () => {
-      // Create a Nubank instance. The login is your cpf with only numbers in it.
-      const nubankInstance = nubank.createInstance({ login: 'login', password: 'password' });
-      // Generates the qrcode base64 image for user authentication.
-      const qrCode = await nubankInstance.generateQRCode();
-
-      // You need to show the qrcode image for the user for authentication. Here I'm updating
-      // the component state with the qrcode base64 image, so I can use it to update the `src` value
-      // of an img component
-      setQRCode(qrCode);
-
-      // To successfully authenticate, the QR code must have been already read by the user,
-      // otherwise, the request will return a 404 error. By default, it'll retry the authentication
-      // request 15 times, as long as it replies with a 404 status.
-      await nubankInstance.authenticate();
-
-      // Get the bills resource
-      const bills = await nubankInstance.getBills();
-      // Get the open bill details
-      const open = await bills.getOpen();
-      // Get future bills, this wil get all your future bills details
-      const future = await bills.getFuture();
-      // Get a specific bill details by providing a close date
-      const bill = await bills.getByCloseDate('YYYY-MM-DD');
-
-      console.log('open bill:', open);
-      console.log('future bill:', future);
-      console.log('bill from close date:', bill);
-    })();
-  }, []);
-
-  return <img src={qrCode} width="250" alt="qr-code" />;
-}
-```
+- [With react](examples/with-react/)
 
 ## Contributing
 
@@ -74,31 +31,31 @@ If you want to contribute with this project, fork this repository and open a PR 
 After cloning your fork repository, install project's dependencies:
 
 ```sh
-$ yarn # npm i
+$ npm i
 ```
 
 Building and watching for code changes:
 
 ```sh
-$ yarn build # npm run build
-$ yarn watch # npm run watch
+$ npm run build
+$ npm run watch
 ```
 
 Running tests:
 
 ```sh
-$ yarn test # npm run test
+$ npm run test
 ```
 
 Linting and formatting code:
 
 ```sh
-$ yarn lint # npm run lint
-$ yarn format # npm run format
+$ npm run lint
+$ npm run format
 ```
 
 I recommend you to use Visual Studio Code and to install the recommended extensions for a better development workflow ;)
 
 ## License
 
-[MIT](https://github.com/renanbatel/nubank-client/blob/master/LICENCE) © Renan Batel Rodrigues
+[MIT](https://github.com/renanbatel/nubank-client/blob/master/LICENCE) © Renan Batel
