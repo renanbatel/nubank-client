@@ -1,17 +1,19 @@
 import { AxiosRequestConfig } from 'axios'
-import { inject, injectable } from 'inversify'
 import { QRCodeToDataURLOptions, toDataURL } from 'qrcode'
+import { inject, injectable, registry } from 'tsyringe'
 import { v4 as uuidV4 } from 'uuid'
 
-import { Services } from '../config'
-import { ApiUrls, AppUrls, DiscoveryUrls, Http, LiftResponse, LoginParameters, LoginResponse } from '../http'
+import { ApiUrls, AppUrls, DefaultHttp, DiscoveryUrls, Http, LiftResponse, LoginParameters, LoginResponse } from '../http'
 import { Authenticator } from './interfaces'
 import { LiftToken } from './types'
 
 @injectable()
+@registry([{ token: 'Http', useToken: DefaultHttp }])
 export class DefaultAuthenticator implements Authenticator {
-  @inject(Services.Http)
-  private http: Http
+  constructor(
+    @inject('Http')
+    private http: Http,
+  ) {}
 
   public async generateLiftToken(qrCodeOptions?: QRCodeToDataURLOptions): Promise<LiftToken> {
     const uuid = uuidV4()

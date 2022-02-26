@@ -14,6 +14,7 @@
   },
   "scripts": {
     "prepare": "husky install .config/husky",
+    "prepublish": "npm run build",
     "clean": "rimraf dist node_modules coverage",
     "build": "rimraf dist && tsc",
     "watch": "rimraf dist && tsc -w",
@@ -27,8 +28,8 @@
     "@types/uuid": "8.3.4",
     "axios": "0.26.0",
     "axios-retry": "3.2.4",
-    "inversify": "6.0.1",
     "qrcode": "1.5.0",
+    "tsyringe": "4.6.0",
     "uuid": "8.3.2"
   },
   "devDependencies": {
@@ -49,6 +50,7 @@
     "eslint-plugin-unicorn": "41.0.0",
     "husky": "7.0.4",
     "jest": "27.5.1",
+    "jest-mock-extended": "2.0.4",
     "prettier": "2.5.1",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",

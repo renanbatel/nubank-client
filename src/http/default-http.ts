@@ -1,11 +1,11 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 import axiosRetry from 'axios-retry'
-import { injectable } from 'inversify'
+import { singleton } from 'tsyringe'
 
 import { generateCorrelationId } from '../utils'
 import { Http } from './interfaces'
 
-@injectable()
+@singleton()
 export class DefaultHttp implements Http {
   private axiosInstance: AxiosInstance
   private accessToken: string

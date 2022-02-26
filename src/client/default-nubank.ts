@@ -1,22 +1,30 @@
-import { inject, injectable } from 'inversify'
+import { inject, injectable, Lifecycle, registry } from 'tsyringe'
 
-import { Services } from '../config'
-import { BillsSummaryResponse, FeaturesUrls, Http } from '../http'
-import { Bills } from '../resources'
+import { BillsSummaryResponse, DefaultHttp, FeaturesUrls, Http } from '../http'
+import { Bills, DefaultBills } from '../resources'
+import { DefaultAuthenticator } from '.'
 import { Authenticator, Nubank } from './interfaces'
 import { Credentials } from './types'
 
 @injectable()
+@registry([
+  { token: 'Authenticator', useToken: DefaultAuthenticator },
+  { token: 'Http', useToken: DefaultHttp },
+  { token: 'Bills', useToken: DefaultBills },
+])
 export class DefaultNubank implements Nubank {
-  @inject(Services.Authenticator)
-  private authenticator: Authenticator
-  @inject(Services.Http)
-  private http: Http
-  @inject(Services.Bills)
-  private bills: Bills
   private credentials: Credentials
   private featuresUrls: FeaturesUrls
   private uuid: string
+
+  constructor(
+    @inject('Authenticator')
+    private authenticator: Authenticator,
+    @inject('Http')
+    private http: Http,
+    @inject('Bills')
+    private bills: Bills,
+  ) {}
 
   public setCredentials(credentials: Credentials) {
     this.credentials = credentials
