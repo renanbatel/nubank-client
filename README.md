@@ -23,6 +23,7 @@ $ yarn add nubank-client # npm i nubank-client --save
 You can use the library on Node or Browser, there are no dependencies that force you to use it on a specific environment, you'll only have to split the authentication on different requests if you plan to build an API with Node. Here are some available examples:
 
 - [With react](examples/with-react/)
+- [With Node.js Express](examples/with-express/)
 
 ## Contributing
 

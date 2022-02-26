@@ -1,0 +1,17 @@
+{
+  "name": "with-express",
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": {
+    "name": "Renan Batel",
+    "email": "rbatel@pm.me"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "body-parser": "1.19.2",
+    "express": "4.17.3",
+    "reflect-metadata": "0.1.13"
+  }
+}
