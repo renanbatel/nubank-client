@@ -1,4 +1,4 @@
 export type InstanceOptions = {
-  login: string
-  password: string
+  login?: string
+  password?: string
 }
