@@ -11,5 +11,5 @@ src
 .nvmrc
 .prettierrc.js
 jest.config.json
-jest.setup
+jest.setup.ts
 tsconfig.json
