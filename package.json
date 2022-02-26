@@ -1,6 +1,6 @@
 {
   "name": "nubank-client",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Nubank API client library for JavaScript (Node and Browser).",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
