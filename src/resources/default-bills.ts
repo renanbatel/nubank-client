@@ -1,16 +1,19 @@
-import { inject, injectable } from 'inversify'
+import { inject, injectable, registry } from 'tsyringe'
 
-import { Services } from '../config'
-import { BillResponse, BillsSummaryResponse, BillStates, BillSummary, FutureBillResponse, Http, NotFoundError } from '../http'
+import { BillResponse, BillsSummaryResponse, BillStates, BillSummary, DefaultHttp, FutureBillResponse, Http, NotFoundError } from '../http'
 import { UnprocessableError } from './error'
 import { Bills } from './interfaces'
 import { RecursivePartial } from './types'
 
 @injectable()
+@registry([{ token: 'Http', useToken: DefaultHttp }])
 export class DefaultBills implements Bills {
-  @inject(Services.Http)
-  private http: Http
   private billsSummaryResponse: BillsSummaryResponse
+
+  constructor(
+    @inject('Http')
+    private http: Http,
+  ) {}
 
   public setBillsSummaryResponse(billsSummaryResponse: BillsSummaryResponse) {
     this.billsSummaryResponse = billsSummaryResponse

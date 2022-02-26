@@ -1,32 +1,31 @@
-import { Container, injectable } from 'inversify'
+import { mock, MockProxy } from 'jest-mock-extended'
+import { container } from 'tsyringe'
 
-import { Services } from '../../config'
-import { BillStates, BillSummary } from '../../http'
+import { BillStates, BillSummary, Http } from '../../http'
 import { DefaultBills } from '../default-bills'
-import { Bills } from '../interfaces'
 
 describe('DefaultBills', () => {
-  let container: Container
+  let httpMock: MockProxy<Http> & Http
+  let defaultBills: DefaultBills
 
   beforeEach(() => {
-    container = new Container()
+    httpMock = mock<Http>()
 
-    container.bind(Services.Bills).to(DefaultBills)
+    container.registerInstance<Http>('Http', httpMock)
+
+    defaultBills = container.resolve(DefaultBills)
+  })
+  afterEach(() => {
+    container.clearInstances()
   })
   describe('findBillSummary', () => {
     it('should find the bill for provided parameters and return it', () => {
-      @injectable()
-      class HttpMock {}
-
-      container.bind(Services.Http).to(HttpMock)
-
       const expectedResult = {
         state: BillStates.OPEN,
         summary: { close_date: '2020-12-12' },
       }
-      const bills = container.get<Bills>(Services.Bills)
 
-      bills.setBillsSummaryResponse({
+      defaultBills.setBillsSummaryResponse({
         _links: {
           future: { href: 'foo' },
           open: { href: 'bar' },
@@ -34,7 +33,7 @@ describe('DefaultBills', () => {
         bills: [expectedResult] as BillSummary[],
       })
 
-      const result = bills.findBillSummary({ summary: { close_date: '2020-12-12' } })
+      const result = defaultBills.findBillSummary({ summary: { close_date: '2020-12-12' } })
 
       expect(result).toEqual(expectedResult)
     })

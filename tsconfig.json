@@ -16,6 +16,7 @@
   "exclude": [
     "node_modules",
     "dist",
-    "jest.setup.ts"
+    "jest.setup.ts",
+    "examples"
   ]
 }
