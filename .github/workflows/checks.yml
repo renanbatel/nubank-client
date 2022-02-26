@@ -3,16 +3,16 @@ name: Checks
 on: [push]
 
 jobs:
-  check:
+  test:
     name: Check code
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
     - name: Install dependencies
-      run: yarn install
-    - name: Lint
-      run: yarn lint
-    - name: Types
-      run: yarn types:check
-    - name: Test
-      run: yarn test
+      run: npm i
+    - name: Check code format and stylle
+      run: npm run lint
+    - name: Check typescript types
+      run: npm run types:check
+    - name: Run tests
+      run: npm run test
