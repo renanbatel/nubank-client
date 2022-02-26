@@ -3,7 +3,7 @@ import { container } from 'tsyringe'
 import { DefaultNubank, Nubank } from './client'
 import { InstanceOptions } from './types'
 
-function createInstance(options: InstanceOptions): Nubank {
+export function createInstance(options: InstanceOptions): Nubank {
   const nubank = container.resolve<Nubank>(DefaultNubank)
   const { login, password } = options
 
