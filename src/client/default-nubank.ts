@@ -1,4 +1,4 @@
-import { inject, injectable, Lifecycle, registry } from 'tsyringe'
+import { inject, injectable, registry } from 'tsyringe'
 
 import { BillsSummaryResponse, DefaultHttp, FeaturesUrls, Http } from '../http'
 import { Bills, DefaultBills } from '../resources'
