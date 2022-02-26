@@ -4,14 +4,22 @@ on:
   push:
     branches:
       - master
+  workflow_run:
+    workflows: [Checks]
+    types:
+      - completed
 
 jobs:
   publish:
     name: Publish package
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version-file: '.nvmrc'
+      - name: Install dependencies
+        run: npm i
       - name: Semantic Release
         uses: cycjimmy/semantic-release-action@v2
         env:
